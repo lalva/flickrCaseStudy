@@ -1,10 +1,11 @@
-# flicker-case-study
-
-To create views/controllers/models/directives, use [yo angular generator](https://github.com/yeoman/generator-angular) version 0.11.1
+# Flicker Case Study
 
 ## Build & development
 
-Run `grunt` for building and `grunt serve` for preview.
+To create views/controllers/models/directives, use [yo angular generator](https://github.com/yeoman/generator-angular) version 0.11.1
+
+1) Navigate to root directory
+2) Run `grunt` for building and `grunt serve` for preview.
 
 ## Testing
 
