@@ -1,5 +1,22 @@
 # Flicker Case Study
 
+## Dev Environment
+
+### Install prerequisites
+
+* Node.js v0.10.x+
+* npm (which comes bundled with Node) v2.1.0+
+* git
+
+#### Install Compass
+`sudo gem install compass`
+
+#### Install the Yeoman toolset
+`npm install --global yo bower grunt-cli`
+
+#### Install Generator
+`npm install --global generator-angular@0.9.2`
+
 ## Build & development
 
 To create views/controllers/models/directives, use [yo angular generator](https://github.com/yeoman/generator-angular) version 0.11.1
