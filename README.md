@@ -1,9 +1,6 @@
 # flicker-case-study
 
-To create views/controllers/models/directives, use below URL.
-
-This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
-version 0.11.1.
+To create views/controllers/models/directives, use [yo angular generator](https://github.com/yeoman/generator-angular) version 0.11.1
 
 ## Build & development
 
