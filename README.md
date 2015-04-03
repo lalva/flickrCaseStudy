@@ -8,6 +8,9 @@
 * npm (which comes bundled with Node) v2.1.0+
 * git
 
+#### Install Compass
+`sudo gem install compass`
+
 #### Install the Yeoman toolset
 `npm install --global yo bower grunt-cli`
 
