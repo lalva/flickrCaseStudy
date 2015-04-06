@@ -15,6 +15,11 @@ angular.module('flickerCaseStudyApp')
       'Karma'
     ];
     mainService.getRecentPhotos(function(data) {
-      console.log(data);
+      mainService.getSourceUrls(data, function(res) {
+        for(var i=0; i < res.length; i++)
+          console.log("Photo #:" + i + res[i]);
+
+        console.log("Successfully got " + res.length + " photos.");
+      });
     });
   });
