@@ -16,9 +16,11 @@ angular
     'ui.router',
     'ngSanitize',
     'ngTouch',
-    'ngMaterial'
+    'ngMaterial',
+    'xml'
   ])
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+    $httpProvider.interceptors.push('xmlHttpInterceptor');
     $stateProvider
       .state('splash', {
         url: '/',
