@@ -8,13 +8,10 @@
  * Controller of the flickerCaseStudyApp
  */
 angular.module('flickerCaseStudyApp')
-  .controller('MainCtrl', function ($scope, $mdSidenav) {
+  .controller('MainCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
-    $scope.toggleSidenav = function(menuId) {
-      $mdSidenav(menuId).toggle();
-    };
   });

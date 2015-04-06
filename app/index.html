@@ -3,8 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
     <meta name="viewport" content="initial-scale=1" />
     <meta name="description" content="">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -23,39 +21,24 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <md-toolbar layout="row">
-      <button ng-click="toggleSidenav('left')" hide-gt-sm class="menuBtn">
-        <span class="visually-hidden">Menu</span>
-      </button>
-      <h1 class="md-toolbar-tools" layout-align-gt-sm="center">Flicker Case Study</h1>
-    </md-toolbar>
-    <div layout="row" flex>
-        <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
-          
-        </md-sidenav>
-        <div layout="column" flex id="content">
-            <md-content layout="column" flex class="md-padding">
+    <md-tabs>
+      <md-tab id="tab1" ui-sref="analysis">
+        <md-tab-label>Item One</md-tab-label>
+        <md-tab-template>
+          <ui-view="analysis"></ui-view>
+        </md-tab-template>
+      </md-tab>
+      <md-tab ui-sref="filter" id="tab2" ng-disabled="data.secondLocked">
+        <md-tab-label>Item Two</md-tab-label>
+        <md-tab-template>
+          <ui-view="filter"></ui-view>
+        </md-tab-template>
+      </md-tab>
+    </md-tabs>
+    <ui-view></ui-view>
 
-            </md-content>
-    <div id="view-frame" ng-view=""></div>
+    
 
-    <div class="footer">
-      <div class="container">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-      </div>
-    </div>
-
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-       }(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-    </script>
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -70,13 +53,13 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/filter.js"></script>
         <script src="scripts/directives/graph.js"></script>
         <script src="scripts/services/filterservice.js"></script>

@@ -13,26 +13,26 @@ angular
     'ngAnimate',
     'ngCookies',
     'ngResource',
-    'ngRoute',
+    'ui.router',
     'ngSanitize',
     'ngTouch',
     'ngMaterial'
   ])
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
+  .config(function ($stateProvider, $urlRouterProvider) {
+    $stateProvider
+      .state('splash', {
+        url: '/',
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/analysis', {
+      .state('analysis', {
+        url: '/analysis',
         templateUrl: 'views/analysis.html',
         controller: 'AnalysisCtrl'
       })
-      .when('/filter', {
+      .state('filter', {
+        url: '/filter',
         templateUrl: 'views/filter.html',
         controller: 'FilterCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
       });
   });
