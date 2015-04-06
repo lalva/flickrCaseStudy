@@ -8,10 +8,13 @@
  * Controller of the flickerCaseStudyApp
  */
 angular.module('flickerCaseStudyApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl', function ($scope, mainService) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
+    mainService.getRecentPhotos(function(data) {
+      console.log(data);
+    });
   });
