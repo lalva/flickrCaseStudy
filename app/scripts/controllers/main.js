@@ -16,10 +16,13 @@ angular.module('flickerCaseStudyApp')
     ];
     mainService.getRecentPhotos(function(data) {
       mainService.getSourceUrls(data, function(res) {
-        for(var i=0; i < res.length; i++)
-          console.log("Photo #:" + i + res[i]);
+        var photosArray = res.splice(49, 50);
+        for(var i=0; i < photosArray.length; i++)
+          console.log("Photo #:" + i + photosArray[i]);
 
-        console.log("Successfully got " + res.length + " photos.");
+        console.log("Successfully got " + photosArray.length + " photos.");
+        $scope.photos = photosArray;
+
       });
     });
   });
