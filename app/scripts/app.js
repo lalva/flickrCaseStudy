@@ -37,4 +37,5 @@ angular
         templateUrl: 'views/filter.html',
         controller: 'FilterCtrl'
       });
+      $urlRouterProvider.otherwise('/');
   });
