@@ -22,7 +22,6 @@ angular.module('flickerCaseStudyApp')
 
         console.log("Successfully got " + photosArray.length + " photos.");
         $scope.photos = photosArray;
-
       });
     });
   });
