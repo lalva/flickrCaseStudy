@@ -19,23 +19,24 @@ angular
     'ngMaterial',
     'xml'
   ])
-  .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
     $httpProvider.interceptors.push('xmlHttpInterceptor');
     $stateProvider
       .state('splash', {
         url: '/',
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl as main'
       })
       .state('analysis', {
         url: '/analysis',
         templateUrl: 'views/analysis.html',
-        controller: 'AnalysisCtrl'
+        controller: 'AnalysisCtrl as analysis'
       })
       .state('filter', {
         url: '/filter',
         templateUrl: 'views/filter.html',
-        controller: 'FilterCtrl'
+        controller: 'FilterCtrl as filter'
       });
-      $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/');
+    $locationProvider.html5Mode(true);
   });
