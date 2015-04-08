@@ -24,7 +24,7 @@ angular.module('flickerCaseStudyApp')
 		  });
 	}
 	this.getSourceUrls = function(photo, callback) {
-		https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
+		// https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
 		var urls = [];
 		var baseUrl = "https://farm";
 		var format = ".jpg";
