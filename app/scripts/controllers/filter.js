@@ -10,5 +10,8 @@
 angular.module('flickerCaseStudyApp')
   .controller('FilterCtrl', ['flickrPhotos', function (flickrPhotos) {
     var self = this;
-    self.photos = flickrPhotos.recentPhotos();
+    self.photos = [];
+    flickrPhotos.recentPhotos(function(photos) {
+      self.photos = photos;
+    });
   }]);
