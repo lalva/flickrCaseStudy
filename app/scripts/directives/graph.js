@@ -13,6 +13,9 @@ angular.module('flickerCaseStudyApp')
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         element.text('this is the graph directive');
+        if (attrs) {
+          //do something
+        }
       }
     };
   });

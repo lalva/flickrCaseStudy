@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html ng-app="flickerCaseStudyApp" class="no-js">
 <head>
   <base href="/">
   <meta charset="utf-8">
@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="styles/filterWidget.css">
   <!-- endbuild -->
 </head>
-<body ng-app="flickerCaseStudyApp">
+<body>
   <!--[if lt IE 9]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. We use HTML5's canvas feature extensivily. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
@@ -35,13 +35,11 @@
     <md-tab id="tab1" ui-sref="analysis">
       <md-tab-label>Analysis</md-tab-label>
       <md-tab-template>
-        <ui-view="analysis"></ui-view>
       </md-tab-template>
     </md-tab>
     <md-tab ui-sref="filter" id="tab2" ng-disabled="data.secondLocked">
       <md-tab-label>Filter</md-tab-label>
       <md-tab-template>
-        <ui-view="filter"></ui-view>
       </md-tab-template>
     </md-tab>
   </md-tabs>
@@ -74,7 +72,6 @@
   <script src="scripts/controllers/filter.js"></script>
   <script src="scripts/directives/graph.js"></script>
   <script src="scripts/services/filterservice.js"></script>
-  <script src="scripts/services/mainservice.js"></script>
   <script src="scripts/services/flickrphotos.js"></script>
   <script src="scripts/services/colorservice.js"></script>
   <script src="scripts/directives/filterwidget.js"></script>
