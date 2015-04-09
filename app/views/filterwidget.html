@@ -1,0 +1,17 @@
+<md-whiteframe id="filter-widget" class="md-whiteframe-z1" layout layout-align="center left">
+  <md-select placeholder="Type" ng-model="type">
+    <md-option ng-repeat="type in types" value="">{{ type }}</md-option>
+  </md-select>
+  <md-select placeholder="Color" ng-model="color">
+    <md-option ng-repeat="color in colors" value="">{{ color }}</md-option>
+        <div id="color-picker">
+            <md-option class="color color-red">
+            </md-option>
+            <md-option class="color color-red">
+            </md-option>
+            <md-option class="color color-red">
+            </md-option>
+        </div>
+    </md-option>
+  </md-select>
+</md-whiteframe>
