@@ -8,6 +8,6 @@
  * Controller of the flickerCaseStudyApp
  */
 angular.module('flickerCaseStudyApp')
-  .controller('MainCtrl', ['flickrPhotos', function (flickrPhotos) {
-    var self = this;
+  .controller('MainCtrl', [function () {
+    // var self = this;
   }]);
