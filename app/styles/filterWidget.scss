@@ -7,13 +7,16 @@
 		padding-left: 1%;
 	}
 }
-#color-picker {
-	display: block;
-	width: 100%;
-	md-option.color {
-		display: inline-block;
-	}
-	md-option.color-red {background-color: red;}
-	md-option.color-blue {background-color: blue;}
-	md-option.color-green {background-color: green;}
+md-input-container {
+	min-width: 100px;
+	max-width: 300px;
+	padding-bottom: 15px;
+}
+md-select.picker {
+	text-align: center;
+}
+md-option.color {
+	margin-top: 3px;
+	height: 35px;
+	color: white;
 }
