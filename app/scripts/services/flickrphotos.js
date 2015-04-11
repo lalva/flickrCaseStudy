@@ -58,7 +58,7 @@ angular.module('flickerCaseStudyApp')
     };
 
     var getRecentPhotos = function() {
-      var url =  'https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key='+apiKey+'&extras='+apiExtras+'&format=json&nojsoncallback=1&per_page='+apiPerPage;
+      var url = 'https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key='+apiKey+'&extras='+apiExtras+'&format=json&nojsoncallback=1&per_page='+apiPerPage;
       $http.get(url)
       .success(function(data) {
         if (data.photos && Array.isArray(data.photos.photo)) {
@@ -82,7 +82,8 @@ angular.module('flickerCaseStudyApp')
     };
 
     var processPhoto = function(i) {
-      RGBaster.colors(photos[i].url_t, {
+      var url = photos[i].url_t; // jshint ignore:line
+      RGBaster.colors(url, {
         paletteSize: 64,
         success: function (payload) {
           if (loadingTimeout) {
