@@ -19,7 +19,7 @@ angular
     'ngMaterial',
     'xml'
   ])
-  .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {//, $locationProvider) {
     $httpProvider.interceptors.push('xmlHttpInterceptor');
     $stateProvider
       .state('splash', {
