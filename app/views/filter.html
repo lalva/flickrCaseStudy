@@ -1,6 +1,5 @@
-<div class="colors">
-  <span ng-repeat="color in filter.usedColors" class="color" style="display:inline-block;width:30px;height:20px;background:{{color.hex}};text-align:center;text-shadow:1px 1px 1px white;" ng-click="filter.selectColor(color.name)">{{color.count}}</span>
-</div>
+
+<filter-widget></filter-widget>
 <div class="row flickr-photos">
   <div class="flickr-photo" ng-repeat="photo in filter.photos" style="background:{{photo.color.hex}};padding:5px;">
     <div style="background:{{photo.colors.dominant}};padding:5px;">

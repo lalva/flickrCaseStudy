@@ -1,0 +1,22 @@
+<md-whiteframe id="filter-widget" class="md-whiteframe-z1" layout layout-align="center left">
+  <md-input-container flex>
+    <label><i class="fa fa-search"></i> Search something</label>
+    <input type="text" ng-change="updateSearchQuery()" ng-model="searchQuery">
+  </md-input-container>
+  <md-select ng-change="updateSize()" placeholder="Size" ng-model="sizePicked">
+    <md-option ng-repeat="size in sizes" value="{{ size }}">{{ size }}</md-option>
+  </md-select>
+  <md-select class="picker" placeholder="Dominant Color" ng-change="updateDominantColor()" ng-model="dominantColorPicked">
+    <md-option ng-repeat="color in dominantColors" value="{{ color }}" class="color" 
+               style="background-color: {{color.hex}}">{{ color.name }} ({{ color.count }})
+    </md-option>
+  </md-select>
+  <md-select class="picker" ng-show="dominantColorPicked" placeholder="Secondary Color" ng-change="updateSecondaryColor()" ng-model="secondaryColorPicked">
+    <md-option ng-repeat="color in secondaryColors" value="{{ color }}" class="color" 
+               style="background-color: {{color.hex}}">{{ color.count }}
+    </md-option>
+  </md-select>
+  <md-select placeholder="Tags" ng-change="updateTags()" ng-model="tagsSelected" multiple="true">
+        <md-option ng-value="tag" ng-repeat="tag in tags">{{ tag }}</md-option>
+  </md-select>
+</md-whiteframe>
