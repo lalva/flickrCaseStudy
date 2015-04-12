@@ -32,19 +32,21 @@
   </div>
 
   <!-- Tab Navigatoin -->
-  <md-tabs>
+  <div ng-controller="TabsCtrl">
+  <md-tabs md-selected="loc">
     <md-tab id="tab1" ui-sref="analysis">
       <md-tab-label>Analysis</md-tab-label>
       <md-tab-template>
       </md-tab-template>
     </md-tab>
-    <md-tab ui-sref="filter" id="tab2" ng-disabled="data.secondLocked">
+    <md-tab ui-sref="filter" id="tab2" ng-disabled="data.secondLocked" md-selected="activeTab">
       <md-tab-label>Filter</md-tab-label>
       <md-tab-template>
       </md-tab-template>
     </md-tab>
   </md-tabs>
   <ui-view></ui-view>
+  </div>
 
   <!-- build:js(.) scripts/vendor.js -->
   <!-- bower:js -->
@@ -76,6 +78,7 @@
   <script src="scripts/services/flickrphotos.js"></script>
   <script src="scripts/services/colorservice.js"></script>
   <script src="scripts/directives/filterwidget.js"></script>
+  <script src="scripts/controllers/tabs.js"></script>
   <!-- endbuild -->
 </body>
 </html>
