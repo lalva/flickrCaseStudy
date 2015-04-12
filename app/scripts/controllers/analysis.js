@@ -78,7 +78,6 @@ angular.module('flickerCaseStudyApp')
             .text(function(d) { return d.text; });
       }
   }
-
     flickrPhotos.recentPhotos(function(photos, colors) {
       self.photos = photos;
       self.usedColors = colors;
@@ -86,6 +85,7 @@ angular.module('flickerCaseStudyApp')
       drawBPGraph();
       getWordCloudData();
       drawWordCloud();
+      drawBubbles();
     });
 
 
