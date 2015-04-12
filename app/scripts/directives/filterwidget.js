@@ -20,7 +20,7 @@ angular.module('flickerCaseStudyApp')
         scope.tags =  parentScope.tags;
 
         scope.updateSize = function() {
-          parentScope.size = scope.sizePicked;
+          parentScope.selectSize(scope.sizePicked);
         };
         scope.updateDominantColor = function() {
           parentScope.dominantColorPicked = scope.dominantColorPicked;
@@ -32,7 +32,7 @@ angular.module('flickerCaseStudyApp')
           console.log('updating');
         };
         scope.updateTags = function() {
-          parentScope.tagsPicked = scope.tagsSelected;
+          parentScope.selectTag(scope.tagsSelected);
         };
       }
     };

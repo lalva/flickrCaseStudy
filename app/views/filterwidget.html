@@ -13,7 +13,7 @@
               </md-select>
             </div>
             <div class="col-md-3">
-              <md-select placeholder="Tags" ng-change="updateTags()" ng-model="tagsSelected" multiple="true">
+              <md-select placeholder="Tags" ng-change="updateTags()" ng-model="tagsSelected">
                 <md-option ng-value="tag" ng-repeat="tag in filter.tags">{{ tag }}</md-option>
               </md-select>
             </div>
