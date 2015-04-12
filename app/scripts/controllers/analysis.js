@@ -8,7 +8,7 @@
  * Controller of the flickerCaseStudyApp
  */
 angular.module('flickerCaseStudyApp')
-  .controller('AnalysisCtrl', ['flickrPhotos', 'colorService', function (flickrPhotos, colorService) {
+  .controller('AnalysisCtrl', ['$scope', 'flickrPhotos', 'colorService', function ($scope, flickrPhotos, colorService) {
     var self = this;
     self.colors = colorService.getColors();
     self.photos = [];
@@ -17,7 +17,9 @@ angular.module('flickerCaseStudyApp')
     flickrPhotos.recentPhotos(function(photos, colors) {
       self.photos = photos;
       self.usedColors = colors;
+      // $scope.$apply();
     });
+
 
     console.log(self.photos);
 
@@ -29,17 +31,16 @@ angular.module('flickerCaseStudyApp')
         var reducedColor = self.photos[i].colors.reduced;
       }
 
-      var param1 = colorData.h + colorData.l + colorData.s;
-      var param2 = reducedColor.h + reducedColor.l + reducedColor.s;
-      var param3 = colorData.b;
+      // var param1 = colorData.h + colorData.l + colorData.s;
+      // var param2 = reducedColor.h + reducedColor.l + reducedColor.s;
+      // var param3 = colorData.b;
 
-      console.log(param1);
-      console.log(param2);
-      console.log(param3);
+      // console.log(param1);
+      // console.log(param2);
+      // console.log(param3);
 
-      graphData.push( [param1, param2, param3] );
+      // graphData.push( [param1, param2, param3] );
     }
-    debugger;
     var sales_data = angular.copy(graphData);
     console.log(sales_data);
 

@@ -38,7 +38,7 @@ angular.module('flickerCaseStudyApp')
       for(var property in colors) {
         self.dominantColors[property] = colors[property];
       }
-      $scope.$apply();
+      // $scope.$apply();
     });
 
 

@@ -9,5 +9,5 @@
  */
 angular.module('flickerCaseStudyApp')
   .controller('MainCtrl', [function () {
-    this.i = 2;
+  console.log("Loaded");
   }]);

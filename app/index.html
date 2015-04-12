@@ -25,15 +25,15 @@
 
   <!-- Add your site or application content here -->
 
-  <!-- Splashcreen -->
-  <div class="splash" ng-cloak>
-    <h2>Loading</h2>
-    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-  </div>
 
   <!-- Tab Navigatoin -->
   <div ng-controller="TabsCtrl">
-  <md-tabs md-selected="loc">
+    <!-- Splashcreen -->
+  <div ng-show="loading">
+    <h2>Loading</h2>
+  </div>
+
+  <md-tabs md-selected="loc" ng-hide="loading">
     <md-tab id="tab1" ui-sref="analysis">
       <md-tab-label>Analysis</md-tab-label>
       <md-tab-template>
@@ -45,7 +45,7 @@
       </md-tab-template>
     </md-tab>
   </md-tabs>
-  <ui-view></ui-view>
+  <ui-view ng-hide="loading"></ui-view>
   </div>
 
   <!-- build:js(.) scripts/vendor.js -->
