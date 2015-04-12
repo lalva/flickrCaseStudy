@@ -16,6 +16,8 @@ angular.module('flickerCaseStudyApp')
     var inProgress = false;
     var usedColors = {};
     var loadingTimeout = null;
+    var tags = [];
+    var tagz = {};
 
     var apiKey = '4460bb9ae847021d54cbe009c74c7534';
     var apiExtras = 'url_t,url_o,tags,description,media';
@@ -31,6 +33,8 @@ angular.module('flickerCaseStudyApp')
       filters = {};
       filtered = [];
       usedColors = {};
+      tags = [];
+      tagz = {};
       callbacks = [callback];
       initUsedColors();
 
@@ -41,10 +45,29 @@ angular.module('flickerCaseStudyApp')
       for (var i = 0; i < photos.length; i++) {
         if (!photos[i].colors) {
           photos.splice(i, 1);
+        } else {
+          var photoTags = photos[i].tags.split(' ');
+          photos[i].tags = [];
+          for (var j = 0; j < photoTags.length; j++) {
+            var tag = photoTags[j].toLowerCase();
+            if (tag.indexOf(':') === -1 && tag !== '') {
+              if (!tagz[tag]) {
+                tagz[tag] = 0;
+              }
+              tagz[tag] += 1;
+              photos[i].tags.push(tag);
+            }
+          }
+        }
+      }
+      var keys = Object.keys(tagz);
+      for (var n = 0; n < keys.length; n++) {
+        if (tagz[keys[n]] > 1) {
+          tags.push(keys[n])
         }
       }
       for (var j = 0; j < callbacks.length; j++) {
-        callbacks[j](photos, usedColors);
+        callbacks[j](photos, usedColors, tags);
       }
       inProgress = false;
       callbacks = [];
@@ -103,70 +126,17 @@ angular.module('flickerCaseStudyApp')
 
     var processColors = function(j, payload) {
       var rgb = payload.dominant.match(/rgb\((\d+),(\d+),(\d+)\)/);
+      var rgbSecondary = payload.secondary.match(/rgb\((\d+),(\d+),(\d+)\)/);
       rgb.splice(0, 1);
-      // var r = rgb[1] / 255, g = rgb[2] / 255, b = rgb[3] / 255;
-      //
-      // var max = Math.max.apply(Math, [r,g,b]);
-      // var min = Math.min.apply(Math, [r,g,b]);
-      //
-      // var chr = max-min;
-      // var hue = 0;
-      // var val = max;
-      // var sat = 0;
-      //
-      // if (val > 0) {
-      //   sat = chr/val;
-      //   if (sat > 0) {
-      //     if (r === max) {
-      //       hue = 60*(((g-min)-(b-min))/chr);
-      //       if (hue < 0) {
-      //         hue += 360;
-      //       }
-      //     } else if (g === max) {
-      //       hue = 120+60*(((b-min)-(r-min))/chr);
-      //     } else if (b === max) {
-      //       hue = 240+60*(((r-min)-(g-min))/chr);
-      //     }
-      //   }
-      // }
-      // payload.r = rgb[1];
-      // payload.g = rgb[2];
-      // payload.b = rgb[3];
-      // payload.h = Math.round(hue);
-      // payload.s = sat;
-      // payload.l = val;
-      // var reducedHue = Math.round(payload.h / 60) * 60;
-      // var reducedSat = 0;
-      // var reducedVal = 0;
-      // if (payload.h > 290 || payload.h < 70 || payload.l * 100 <= 10) {
-      //   reducedHue = 0;
-      //   if (val * 100 < 30) {
-      //     reducedVal = 0;
-      //   } else if (val * 100 < 60) {
-      //     reducedVal = 0.5;
-      //   } else if (val * 100 < 80) {
-      //     reducedVal = 0.75;
-      //   } else {
-      //     reducedVal = 1;
-      //   }
-      // } else {
-      //   reducedSat = 1;
-      //   reducedVal = val*100;
-      //   if (reducedVal < 75) {
-      //     reducedVal = 0.5;
-      //   } else {
-      //     reducedVal = 1;
-      //   }
-      // }
-      // payload.reduced = {
-      //   h: reducedHue,
-      //   s: reducedSat,
-      //   l: reducedVal
-      // };
-      // var color = colorService.findByHSL(reducedHue, reducedSat, reducedVal);
+      rgbSecondary.splice(0, 1);
       var color = colorService.findClosestColor(rgb);
+      var colorSecondary = colorService.findClosestColor(rgbSecondary);
       usedColors[color.name].count += 1;
+      if (color !== colorSecondary) {
+        usedColors[colorSecondary.name].count += 1;
+      }
       photos[j].color = color;
+      photos[j].colorSecondary = colorSecondary;
       photos[j].colors = payload;
     };
 
@@ -178,7 +148,7 @@ angular.module('flickerCaseStudyApp')
           var filter = filters[keys[i]];
           switch(keys[i]) {
             case 'color':
-              if (photos[j].color && photos[j].color.name === filter) {
+              if ((photos[j].color && photos[j].color.name === filter) || (photos[j].colorSecondary && photos[j].colorSecondary.name === filter)) {
                 filtered.push(photos[j]);
               }
               break;
@@ -193,6 +163,22 @@ angular.module('flickerCaseStudyApp')
             case 'tags':
               if (photos[j].tags && photos[j].tags.indexOf(filter) !== -1) {
                 filtered.push(photos[j]);
+              }
+              break;
+            case 'size':
+              var max = Math.max(photos[j].width_o, photos[j].height_o); // jshint ignore:line
+              if (filter === 'Large') {
+                if (max >= 1080) {
+                  filtered.push(photos[j]);
+                }
+              } else if (filter === 'Small') {
+                if (max <= 720) {
+                  filtered.push(photos[j]);
+                }
+              } else {
+                if (max < 1080 && max > 720) {
+                  filtered.push(photos[j]);
+                }
               }
               break;
             default:
@@ -220,16 +206,6 @@ angular.module('flickerCaseStudyApp')
         callback(query);
       },
       filterByColor: function(color, add, callback) {
-        // if (filters.color) {
-        //   filtered = [];
-        // }
-        // filters.color = color;
-        // for (var i = 0; i < photos.length; i++) {
-        //   if (photos[i].color && photos[i].color.name === color) {
-        //     filtered.push(photos[i]);
-        //   }
-        // }
-        // callback(filtered);
         if (add) {
           filters.color = color;
         } else {
@@ -244,7 +220,7 @@ angular.module('flickerCaseStudyApp')
           }
           filters.tags.push(tag);
         } else {
-          delete filters.tag;
+          delete filters.tags;
         }
         applyFilters(callback);
       },
@@ -253,6 +229,14 @@ angular.module('flickerCaseStudyApp')
           filters.query = query;
         } else {
           delete filters.query;
+        }
+        applyFilters(callback);
+      },
+      filterBySize: function(size, add, callback) {
+        if (add) {
+          filters.size = size;
+        } else {
+          delete filters.size;
         }
         applyFilters(callback);
       }

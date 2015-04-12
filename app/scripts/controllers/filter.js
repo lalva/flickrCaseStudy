@@ -14,10 +14,9 @@ angular.module('flickerCaseStudyApp')
     self.usedColors = {};
 
     //Defined FOR the nested filter-widget directive
-    self.sizes = ['small', 'medium', 'large'];
+    self.sizes = ['Small', 'Medium', 'Large'];
     self.dominantColors = {};
-    self.secondaryColors = {};
-    self.tags = ['tag1', 'tag2'];
+    self.tags = [];
 
     //Defined BY the nested filter-widget directive
     self.size = '';
@@ -32,9 +31,10 @@ angular.module('flickerCaseStudyApp')
       });
     };
 
-    flickrPhotos.recentPhotos(function(photos, colors) {
+    flickrPhotos.recentPhotos(function(photos, colors, tags) {
       self.photos = photos;
       self.usedColors = colors;
+      self.tags = tags;
       for(var property in colors) {
         self.dominantColors[property] = colors[property];
       }

@@ -77,40 +77,40 @@ angular.module('flickerCaseStudyApp')
       return [CIEL, CIEa, CIEb];
     };
 
-    var cie1994 = function(x, y, isTextiles) {
-      var _x = {l: x[0], a: x[1], b: x[2]};
-      var _y = {l: y[0], a: y[1], b: y[2]};
-      var k2;
-      var k1;
-      var kl;
-      var kh = 1;
-      var kc = 1;
-      if (isTextiles) {
-        k2 = 0.014;
-        k1 = 0.048;
-        kl = 2;
-      } else {
-        k2 = 0.015;
-        k1 = 0.045;
-        kl = 1;
-      }
-
-      var c1 = Math.sqrt(_x.a * _x.a + _x.b * _x.b);
-      var c2 = Math.sqrt(_y.a * _y.a + _y.b * _y.b);
-
-      var sh = 1 + k2 * c1;
-      var sc = 1 + k1 * c1;
-      var sl = 1;
-
-      var da = _x.a - _y.a;
-      var db = _x.b - _y.b;
-      var dc = c1 - c2;
-
-      var dl = _x.l - _y.l;
-      var dh = Math.sqrt(da * da + db * db - dc * dc);
-
-      return Math.sqrt(Math.pow((dl/(kl * sl)),2) + Math.pow((dc/(kc * sc)),2) + Math.pow((dh/(kh * sh)),2));
-    };
+    // var cie1994 = function(x, y, isTextiles) {
+    //   var _x = {l: x[0], a: x[1], b: x[2]};
+    //   var _y = {l: y[0], a: y[1], b: y[2]};
+    //   var k2;
+    //   var k1;
+    //   var kl;
+    //   var kh = 1;
+    //   var kc = 1;
+    //   if (isTextiles) {
+    //     k2 = 0.014;
+    //     k1 = 0.048;
+    //     kl = 2;
+    //   } else {
+    //     k2 = 0.015;
+    //     k1 = 0.045;
+    //     kl = 1;
+    //   }
+    //
+    //   var c1 = Math.sqrt(_x.a * _x.a + _x.b * _x.b);
+    //   var c2 = Math.sqrt(_y.a * _y.a + _y.b * _y.b);
+    //
+    //   var sh = 1 + k2 * c1;
+    //   var sc = 1 + k1 * c1;
+    //   var sl = 1;
+    //
+    //   var da = _x.a - _y.a;
+    //   var db = _x.b - _y.b;
+    //   var dc = c1 - c2;
+    //
+    //   var dl = _x.l - _y.l;
+    //   var dh = Math.sqrt(da * da + db * db - dc * dc);
+    //
+    //   return Math.sqrt(Math.pow((dl/(kl * sl)),2) + Math.pow((dc/(kc * sc)),2) + Math.pow((dh/(kh * sh)),2));
+    // };
 
     function degrees(n) {
       return n * (180 / Math.PI);
@@ -121,6 +121,7 @@ angular.module('flickerCaseStudyApp')
     }
 
     function ciede2000(c1, c2) {
+      /*jshint camelcase: false */
       var sqrt = Math.sqrt;
       var pow = Math.pow;
       var cos = Math.cos;
@@ -141,8 +142,8 @@ angular.module('flickerCaseStudyApp')
       var kC = 1;
       var kH = 1;
 
-      var C1 = sqrt(pow(a1, 2) + pow(b1, 2))
-      var C2 = sqrt(pow(a2, 2) + pow(b2, 2))
+      var C1 = sqrt(pow(a1, 2) + pow(b1, 2));
+      var C2 = sqrt(pow(a2, 2) + pow(b2, 2));
 
       var a_C1_C2 = (C1 + C2) / 2.0;
 
@@ -155,7 +156,7 @@ angular.module('flickerCaseStudyApp')
       var C2p = sqrt(pow(a2p, 2) + pow(b2, 2));
 
       var hp_f = function(x, y) {
-        if (x == 0 && y == 0) {
+        if (x === 0 && y === 0) {
           return 0;
         } else {
           var tmphp = degrees(atan2(x, y));
@@ -174,7 +175,7 @@ angular.module('flickerCaseStudyApp')
       var dCp = C2p - C1p;
 
       var dhp_f = function(C1, C2, h1p, h2p) {
-        if (C1 * C2 == 0) {
+        if (C1 * C2 === 0) {
           return 0;
         } else if (abs(h2p - h1p) <= 180) {
           return h2p - h1p;
@@ -193,7 +194,7 @@ angular.module('flickerCaseStudyApp')
       var a_Cp = (C1p + C2p) / 2.0;
 
       var a_hp_f = function(C1, C2, h1p, h2p) {
-        if (C1 * C2 == 0) {
+        if (C1 * C2 === 0) {
           return h1p + h2p;
         } else if (abs(h1p - h2p) <= 180) {
           return (h1p + h2p) / 2.0;

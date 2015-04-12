@@ -17,6 +17,13 @@
 #### Install Generator
 `npm install --global generator-angular@0.9.2`
 
+#### Clone and Run Project
+`git clone https://github.com/lalva/flickrCaseStudy.git`
+`cd flickrCaseStudy`
+`npm install`
+`bower install`
+`grunt serve`
+
 ## Build & development
 
 To create views/controllers/models/directives, use [yo angular generator](https://github.com/yeoman/generator-angular) version 0.11.1
