@@ -211,8 +211,28 @@ angular.module('flickerCaseStudyApp')
         return tags;
       },
       searchPhotos: function(query, callback) {
-        //api for search photos
-        callback(query);
+        inProgress = true;
+        photos = [];
+        filters = {};
+        filtered = [];
+        usedColors = {};
+        tags = [];
+        tagz = {};
+        callbacks = [callback];
+        initUsedColors();
+        var url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key='+apiKey+'&text='+query+'&extras='+apiExtras+'&per_page='+apiPerPage+'&format=json&nojsoncallback=1';
+        $http.get(url)
+        .success(function(data) {
+          if (data.photos && Array.isArray(data.photos.photo)) {
+            photos = data.photos.photo;
+            processPhotos();
+          } else {
+            console.log('Error no photo data');
+          }
+        })
+        .error(function(data, status) {
+          console.log('Error ',status,data);
+        });
       },
       filterByColor: function(color, add, callback) {
         if (add) {

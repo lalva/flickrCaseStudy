@@ -1,3 +1,4 @@
+/*jshint ignore:start */
 // Word cloud layout by Jason Davies, http://www.jasondavies.com/word-cloud/
 // Algorithm due to Jonathan Feinberg, http://static.mrfeinberg.com/bv_ch03.pdf
 (function() {
@@ -399,3 +400,4 @@
   if (typeof module === "object" && module.exports) module.exports = cloud;
   else (d3.layout || (d3.layout = {})).cloud = cloud;
 })();
+/*jshint ignore:end */

@@ -25,4 +25,16 @@ angular.module('flickerCaseStudyApp')
     		}
       };
   	$scope.loc = $scope.getLocation();
+    $scope.refreshSite = function() {
+      window.location = "/";
+    };
+    $scope.search = function() {
+      $scope.loading = true;
+      $state.go('splash');
+      flickrPhotos.searchPhotos($scope.customSearch, function() {
+        $scope.loading = false;
+        $state.go('filter');
+        $scope.loc = 1;
+      });
+    }
   });

@@ -34,12 +34,13 @@
   </div>
 
   <div class="row" ng-hide="loading" style="margin: 0">
-    <md-input-container class="col-md-7">
+    <md-input-container class="col-md-6">
       <label><i class="fa fa-search"></i> Custom Search</label>
        <input type="text" ng-model="customSearch">
     </md-input-container>
+    <div class="col-md-3" style="padding-top:20px;"><md-button class="md-raised md-primary" class="col-md-3" ng-click="search()">Search</md-button></div>
     <div class="col-md-3"></div>
-    <md-button id="recentsBtn" class="md-fab md-primary col-md-2" aria-label="Profile">
+    <md-button id="recentsBtn" class="md-fab md-primary col-md-2" ng-click="refreshSite()" aria-label="Profile">
       &#x21bb;
       <md-tooltip>Get Recents</md-tooltip>
     </md-button>

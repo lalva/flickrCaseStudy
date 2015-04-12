@@ -22,7 +22,7 @@ angular.module('flickerCaseStudyApp')
         if (photo.colors) {
           var dominant = photo.colors.dominant;
           var color = photo.color.name;
-          self.graphData.push([color, dominant, 1, 1]);
+          self.graphData.push([color, dominant, 1, 5]);
         }
       }
     };
@@ -33,13 +33,12 @@ angular.module('flickerCaseStudyApp')
         .append("svg").attr('width',width).attr('height',(height+margin.b+margin.t))
         .append("g").attr("transform","translate("+ margin.l+","+margin.t+")");
       var data = [ 
-        {data:bP.partData(self.graphData,2), id:'ColorSeparation', header:["Reduced Color","Dominant Color", "Color Separation"]}
+        {data:bP.partData(self.graphData,2), id:'ColorSeparation', header:["Reduced","Dominant", "Color Separation"]}
       ];
       bP.draw(data, svg);
     }
     var tags = [];
     var getWordCloudData = function() {
-      debugger;
       var photoTags = flickrPhotos.getTags();
       var keys = Object.keys(photoTags);
       for(var k=0; k < keys.length; k++) {
@@ -89,8 +88,6 @@ angular.module('flickerCaseStudyApp')
       drawWordCloud();
     });
 
-
-    console.log(self.photos);
 
 
   }]);
