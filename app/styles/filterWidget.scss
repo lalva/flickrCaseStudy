@@ -1,10 +1,15 @@
+div.container-fluid {
+	padding: 0px;
+}
 #filter-widget {
-	margin-top: 8px;
-	padding-left: 15px;
+	margin: 0px;
+	div.row {
+		margin-left: 5px;
+	}
 	md-select {
 		margin-top: 5px;
 		padding-bottom: 5px;
-		padding-left: 1%;
+		padding-left: 2%;
 	}
 }
 md-input-container {

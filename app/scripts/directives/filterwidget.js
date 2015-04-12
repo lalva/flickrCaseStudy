@@ -35,6 +35,10 @@ angular.module('flickerCaseStudyApp')
           parentScope.searchQuery = scope.searchQuery;
           console.log('updating');
         };
+        scope.updateSearchQueryTwo = function() {
+          parentScope.searchQueryTWo = scope.searchQueryTwo;
+          console.log('updating');
+        };
         scope.updateTags = function() {
           parentScope.tagsPicked = scope.tagsSelected;
         };
