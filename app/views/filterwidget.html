@@ -1,15 +1,27 @@
-<md-whiteframe id="filter-widget" class="md-whiteframe-z1" layout layout-align="center left">
-  <md-input-container flex>
-    <label><i class="fa fa-search"></i> Filter</label>
-    <input type="text" ng-change="updateSearchQuery()" ng-model="searchQuery">
-  </md-input-container>
-  <md-select ng-change="updateSize()" placeholder="Size" ng-model="sizePicked">
-    <md-option ng-repeat="size in sizes" value="{{ size }}">{{ size }}</md-option>
-  </md-select>
-  <md-select class="picker" placeholder="Color" ng-change="updateDominantColor()" ng-model="dominantColorPicked">
-    <md-option ng-repeat="color in dominantColors" value="{{ color }}" class="color" style="background-color: {{color.hex}}">{{ color.name }} ({{ color.count }})</md-option>
-  </md-select>
-  <md-select placeholder="Tags" ng-change="updateTags()" ng-model="tagsSelected" multiple="true">
-    <md-option ng-value="tag" ng-repeat="tag in tags">{{ tag }}</md-option>
-  </md-select>
-</md-whiteframe>
+<div class="container-fluid">
+    <!-- <div class="row">
+        <md-input-container class="col-md-6">
+            <label><i class="fa fa-search"></i> Quick Filter</label>
+            <input type="text" ng-change="updateSearchQuery()" ng-model="searchQuery">
+        </md-input-container>
+    </div> -->
+    <md-whiteframe id="filter-widget" class="md-whiteframe-z1 row" layout layout-align="center left">
+        <div class="row">
+            <div class="col-md-3">
+              <md-select  ng-change="updateSize()" placeholder="Size" ng-model="sizePicked">
+                <md-option ng-repeat="size in filter.sizes" value="{{ size }}">{{ size }}</md-option>
+              </md-select>
+            </div>
+            <div class="col-md-3">
+              <md-select placeholder="Tags" ng-change="updateTags()" ng-model="tagsSelected" multiple="true">
+                <md-option ng-value="tag" ng-repeat="tag in filter.tags">{{ tag }}</md-option>
+              </md-select>
+            </div>
+            <div class="col-md-3">
+              <md-select class="picker" placeholder="Color" ng-change="updateDominantColor()" ng-model="dominantColorPicked">
+                <md-option ng-repeat="color in filter.dominantColors" value="{{ color }}" class="color" style="background-color: {{color.hex}}">{{ color.name }} ({{ color.count }})</md-option>
+              </md-select>
+            </div>
+        </div>
+    </md-whiteframe>
+</div>

@@ -17,7 +17,6 @@ angular.module('flickerCaseStudyApp')
         var parentScope = scope.$parent.filter;
         scope.sizes =  parentScope.sizes;
         scope.dominantColors = parentScope.dominantColors;
-        scope.secondaryColors = parentScope.secondaryColors;
         scope.tags =  parentScope.tags;
 
         scope.updateSize = function() {
@@ -27,9 +26,6 @@ angular.module('flickerCaseStudyApp')
           parentScope.dominantColorPicked = scope.dominantColorPicked;
           var arg = JSON.parse(scope.dominantColorPicked).name;
           parentScope.selectColor(arg);
-        }  ;
-        scope.updateSecondaryColor = function() {
-          parentScope.secondaryColorPicked = scope.secondaryColorPicked;
         };
         scope.updateSearchQuery = function() {
           parentScope.searchQuery = scope.searchQuery;

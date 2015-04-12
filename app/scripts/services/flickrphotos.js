@@ -48,8 +48,8 @@ angular.module('flickerCaseStudyApp')
         } else {
           var photoTags = photos[i].tags.split(' ');
           photos[i].tags = [];
-          for (var j = 0; j < photoTags.length; j++) {
-            var tag = photoTags[j].toLowerCase();
+          for (var k = 0; k < photoTags.length; k++) {
+            var tag = photoTags[k].toLowerCase();
             if (tag.indexOf(':') === -1 && tag !== '') {
               if (!tagz[tag]) {
                 tagz[tag] = 0;
@@ -63,7 +63,7 @@ angular.module('flickerCaseStudyApp')
       var keys = Object.keys(tagz);
       for (var n = 0; n < keys.length; n++) {
         if (tagz[keys[n]] > 1) {
-          tags.push(keys[n])
+          tags.push(keys[n]);
         }
       }
       for (var j = 0; j < callbacks.length; j++) {
