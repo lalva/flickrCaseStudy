@@ -17,50 +17,43 @@ angular.module('flickerCaseStudyApp')
     flickrPhotos.recentPhotos(function(photos, colors) {
       self.photos = photos;
       self.usedColors = colors;
-      // $scope.$apply();
     });
 
 
     console.log(self.photos);
 
-    var graphData = [];
-    for(var i=0; i < self.photos.length; i++) {
+    var tags = ['one', 'two'];
 
-      if(self.photos[i].colors != undefined) {
-        var colorData = self.photos[i].colors;
-        var reducedColor = self.photos[i].colors.reduced;
-      }
 
-      // var param1 = colorData.h + colorData.l + colorData.s;
-      // var param2 = reducedColor.h + reducedColor.l + reducedColor.s;
-      // var param3 = colorData.b;
-
-      // console.log(param1);
-      // console.log(param2);
-      // console.log(param3);
-
-      // graphData.push( [param1, param2, param3] );
+    var fill = d3.scale.category20();
+    d3.layout.cloud().size([300, 300])
+        .words(tags.map(function(d) {
+          return {text: d, size: 10 + Math.random() * 90};
+        }))
+        .padding(5)
+        .rotate(function() { return ~~(Math.random() * 2) * 90; })
+        .font("Impact")
+        .fontSize(function(d) { return d.size; })
+        .on("end", draw)
+        .start();
+    function draw(words) {
+      d3.select("#drawingArea").append("svg")
+          .attr("width", 300)
+          .attr("height", 300)
+        .append("g")
+          .attr("transform", "translate(150,150)")
+        .selectAll("text")
+          .data(words)
+        .enter().append("text")
+          .style("font-size", function(d) { return d.size + "px"; })
+          .style("font-family", "Impact")
+          .style("fill", function(d, i) { return fill(i); })
+          .attr("text-anchor", "middle")
+          .attr("transform", function(d) {
+            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+          })
+          .text(function(d) { return d.text; });
     }
-    var sales_data = angular.copy(graphData);
-    console.log(sales_data);
 
-
-    var sales_data = [
-      ['Black', '2', '15'],
-      ['White', '3', '16']
-    ];
-
-    var width = 1100, height = 610, margin ={b:0, t:40, l:170, r:50};
-
-    var svg = d3.select("body")
-      .append("svg").attr('width',width).attr('height',(height+margin.b+margin.t))
-      .append("g").attr("transform","translate("+ margin.l+","+margin.t+")");
-
-    var data = [ 
-      {data:bP.partData(sales_data,2), id:'SalesAttempts', header:["Color","Derived", "Analysis 1"]},
-      {data:bP.partData(sales_data,3), id:'Sales', header:["Color","Derived", "Analysis 2"]}
-    ];
-
-    bP.draw(data, svg);
-
+    
   }]);

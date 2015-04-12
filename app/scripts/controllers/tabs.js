@@ -9,7 +9,6 @@
  */
 angular.module('flickerCaseStudyApp')
   .controller('TabsCtrl', function ($scope, $location, flickrPhotos, $state) {
-
       $scope.loading = true;
       flickrPhotos.recentPhotos(function() {
         $scope.loading = false;
