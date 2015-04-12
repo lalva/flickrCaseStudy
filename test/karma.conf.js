@@ -34,6 +34,7 @@ module.exports = function(config) {
       'bower_components/x2js/xml2json.min.js',
       'bower_components/angular-xml/angular-xml.js',
       'bower_components/rgbaster/rgbaster.js',
+      'bower_components/d3/d3.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',
