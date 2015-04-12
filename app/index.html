@@ -33,6 +33,18 @@
     <h2>Loading</h2>
   </div>
 
+  <div class="row" ng-hide="loading" style="margin: 0">
+    <md-input-container class="col-md-7">
+      <label><i class="fa fa-search"></i> Custom Search</label>
+       <input type="text" ng-model="customSearch">
+    </md-input-container>
+    <div class="col-md-3"></div>
+    <md-button id="recentsBtn" class="md-fab md-primary col-md-2" aria-label="Profile">
+      &#x21bb;
+      <md-tooltip>Get Recents</md-tooltip>
+    </md-button>
+  </div>
+
   <md-tabs md-selected="loc" ng-hide="loading">
     <md-tab id="tab1" ui-sref="analysis">
       <md-tab-label>Analysis</md-tab-label>
@@ -46,7 +58,6 @@
     </md-tab>
   </md-tabs>
   <ui-view ng-hide="loading"></ui-view>
-  </div>
 
   <!-- build:js(.) scripts/vendor.js -->
   <!-- bower:js -->
