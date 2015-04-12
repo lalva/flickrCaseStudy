@@ -12,6 +12,8 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 body {
   padding: 0;
+  width: 100%;
+  overflow-x: none;
 }
 #view-frame {
   padding-left: 15px; 

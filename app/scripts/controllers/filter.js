@@ -14,10 +14,10 @@ angular.module('flickerCaseStudyApp')
     self.usedColors = {};
 
     //Defined FOR the nested filter-widget directive
-    self.sizes = ['small', 'medium', 'large'];
+    self.sizes = ['none', 'small', 'medium', 'large'];
     self.dominantColors = {};
     self.secondaryColors = {};
-    self.tags = ['tag1', 'tag2'];
+    self.tags = ['none', 'tag1', 'tag2'];
 
     //Defined BY the nested filter-widget directive
     self.size = '';
@@ -25,13 +25,13 @@ angular.module('flickerCaseStudyApp')
     self.secondaryColorPicked = '';
     self.tagsPicked = [];
     self.searchQuery = '';
+    self.searchQueryTwo = '';
 
     self.selectColor = function(color) {
       flickrPhotos.filterByColor(color, true, function(filtered) {
         self.photos = filtered;
       });
     };
-
     flickrPhotos.recentPhotos(function(photos, colors) {
       self.photos = photos;
       self.usedColors = colors;
