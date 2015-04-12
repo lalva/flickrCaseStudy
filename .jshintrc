@@ -19,6 +19,8 @@
   "smarttabs": true,
   "globals": {
     "angular": false,
-    "RGBaster": false
+    "RGBaster": false,
+    "d3": false,
+    "bP": false
   }
 }

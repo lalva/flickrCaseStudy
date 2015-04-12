@@ -143,6 +143,9 @@ angular.module('flickerCaseStudyApp')
     var applyFilters = function(callback) {
       filtered = [];
       var keys = Object.keys(filters);
+      if (keys.length === 0) {
+        filtered = photos;
+      }
       for (var j = 0; j < photos.length; j++) {
         for (var i = 0; i < keys.length; i++) {
           var filter = filters[keys[i]];
@@ -160,7 +163,7 @@ angular.module('flickerCaseStudyApp')
                 filtered.push(photos[j]);
               }
               /* falls through */
-            case 'tags':
+            case 'tag':
               if (photos[j].tags && photos[j].tags.indexOf(filter) !== -1) {
                 filtered.push(photos[j]);
               }
@@ -201,6 +204,12 @@ angular.module('flickerCaseStudyApp')
           callback(photos, usedColors);
         }
       },
+      getTags: function() {
+        return tagz;
+      },
+      getFrequentTags: function() {
+        return tags;
+      },
       searchPhotos: function(query, callback) {
         //api for search photos
         callback(query);
@@ -215,12 +224,9 @@ angular.module('flickerCaseStudyApp')
       },
       filterByTag: function(tag, add, callback) {
         if (add) {
-          if (!Array.isArray(filters.tag)) {
-            filters.tags = [];
-          }
-          filters.tags.push(tag);
+          filters.tag = tag;
         } else {
-          delete filters.tags;
+          delete filters.tag;
         }
         applyFilters(callback);
       },
