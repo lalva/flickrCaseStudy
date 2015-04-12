@@ -89,7 +89,7 @@ angular.module('flickerCaseStudyApp')
     var processPhoto = function(i) {
       var url = photos[i].url_t; // jshint ignore:line
       RGBaster.colors(url, {
-        paletteSize: 64,
+        paletteSize: 256,
         success: function (payload) {
           if (loadingTimeout) {
             window.clearTimeout(loadingTimeout);

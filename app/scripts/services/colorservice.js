@@ -112,6 +112,111 @@ angular.module('flickerCaseStudyApp')
       return Math.sqrt(Math.pow((dl/(kl * sl)),2) + Math.pow((dc/(kc * sc)),2) + Math.pow((dh/(kh * sh)),2));
     };
 
+    function degrees(n) {
+      return n * (180 / Math.PI);
+    }
+
+    function radians(n) {
+      return n * (Math.PI / 180);
+    }
+
+    function ciede2000(c1, c2) {
+      var sqrt = Math.sqrt;
+      var pow = Math.pow;
+      var cos = Math.cos;
+      var atan2 = Math.atan2;
+      var sin = Math.sin;
+      var abs = Math.abs;
+      var exp = Math.exp;
+
+      var L1 = c1[0];
+      var a1 = c1[1];
+      var b1 = c1[2];
+
+      var L2 = c2[0];
+      var a2 = c2[1];
+      var b2 = c2[2];
+
+      var kL = 1;
+      var kC = 1;
+      var kH = 1;
+
+      var C1 = sqrt(pow(a1, 2) + pow(b1, 2))
+      var C2 = sqrt(pow(a2, 2) + pow(b2, 2))
+
+      var a_C1_C2 = (C1 + C2) / 2.0;
+
+      var G = 0.5 * (1 - sqrt(pow(a_C1_C2, 7.0) / (pow(a_C1_C2, 7.0) + pow(25.0, 7.0))));
+
+      var a1p = (1.0 + G) * a1;
+      var a2p = (1.0 + G) * a2;
+
+      var C1p = sqrt(pow(a1p, 2) + pow(b1, 2));
+      var C2p = sqrt(pow(a2p, 2) + pow(b2, 2));
+
+      var hp_f = function(x, y) {
+        if (x == 0 && y == 0) {
+          return 0;
+        } else {
+          var tmphp = degrees(atan2(x, y));
+          if (tmphp >= 0) {
+            return tmphp;
+          } else {
+            return tmphp + 360;
+          }
+        }
+      };
+
+      var h1p = hp_f(b1, a1p);
+      var h2p = hp_f(b2, a2p);
+
+      var dLp = L2 - L1;
+      var dCp = C2p - C1p;
+
+      var dhp_f = function(C1, C2, h1p, h2p) {
+        if (C1 * C2 == 0) {
+          return 0;
+        } else if (abs(h2p - h1p) <= 180) {
+          return h2p - h1p;
+        } else if ((h2p - h1p) > 180) {
+          return (h2p - h1p) - 360;
+        } else if ((h2p - h1p) < -180) {
+          return (h2p - h1p) + 360;
+        } else {
+          throw (new Error());
+        }
+      };
+      var dhp = dhp_f(C1, C2, h1p, h2p);
+      var dHp = 2 * sqrt(C1p * C2p) * sin(radians(dhp) / 2.0);
+
+      var a_L = (L1 + L2) / 2.0;
+      var a_Cp = (C1p + C2p) / 2.0;
+
+      var a_hp_f = function(C1, C2, h1p, h2p) {
+        if (C1 * C2 == 0) {
+          return h1p + h2p;
+        } else if (abs(h1p - h2p) <= 180) {
+          return (h1p + h2p) / 2.0;
+        } else if ((abs(h1p - h2p) > 180) && ((h1p + h2p) < 360)) {
+          return (h1p + h2p + 360) / 2.0;
+        } else if ((abs(h1p - h2p) > 180) && ((h1p + h2p) >= 360)) {
+          return (h1p + h2p - 360) / 2.0;
+        } else {
+          throw (new Error());
+        }
+      };
+      var a_hp = a_hp_f(C1, C2, h1p, h2p);
+      var T = 1 - 0.17 * cos(radians(a_hp - 30)) + 0.24 * cos(radians(2 * a_hp)) + 0.32 * cos(radians(3 * a_hp + 6)) - 0.20 * cos(radians(4 * a_hp - 63));
+      var d_ro = 30 * exp(-(pow((a_hp - 275) / 25, 2)));
+      var RC = sqrt((pow(a_Cp, 7.0)) / (pow(a_Cp, 7.0) + pow(25.0, 7.0)));
+      var SL = 1 + ((0.015 * pow(a_L - 50, 2)) / sqrt(20 + pow(a_L - 50, 2.0)));
+      var SC = 1 + 0.045 * a_Cp;
+      var SH = 1 + 0.015 * a_Cp * T;
+      var RT = -2 * RC * sin(radians(2 * d_ro));
+      var dE = sqrt(pow(dLp / (SL * kL), 2) + pow(dCp / (SC * kC), 2) + pow(dHp / (SH * kH), 2) + RT * (dCp / (SC * kC)) * (dHp / (SH * kH)));
+      return dE;
+    }
+
 
 
     var colors = {
@@ -182,13 +287,13 @@ angular.module('flickerCaseStudyApp')
         ],
         'rgb': [
           0,
-          0,
-          255
+          255,
+          0
         ],
         'lab': [
-          32.302586667249,
-          79.196661789309,
-          -107.86368104495
+          87.737033473544,
+          -86.184636497625,
+          83.181164747779
         ]
       },
       'blue': {
@@ -201,13 +306,13 @@ angular.module('flickerCaseStudyApp')
         ],
         'rgb': [
           0,
-          255,
-          0
+          0,
+          255
         ],
         'lab': [
-          87.737033473544,
-          -86.184636497625,
-          83.181164747779
+          32.302586667249,
+          79.196661789309,
+          -107.86368104495
         ]
       },
       'yellow': {
@@ -220,13 +325,13 @@ angular.module('flickerCaseStudyApp')
         ],
         'rgb': [
           255,
-          0,
-          255
+          255,
+          0
         ],
         'lab': [
-          60.319933664076,
-          98.254218686161,
-          -60.842984223862
+          97.138246981297,
+          -21.555908334832,
+          94.482485446445
         ]
       },
       'cyan': {
@@ -258,13 +363,13 @@ angular.module('flickerCaseStudyApp')
         ],
         'rgb': [
           255,
-          255,
-          0
+          0,
+          255
         ],
         'lab': [
-          97.138246981297,
-          -21.555908334832,
-          94.482485446445
+          60.319933664076,
+          98.254218686161,
+          -60.842984223862
         ]
       },
       'silver': {
@@ -334,13 +439,13 @@ angular.module('flickerCaseStudyApp')
         ],
         'rgb': [
           128,
-          0,
-          128
+          128,
+          0
         ],
         'lab': [
-          29.782100092098,
-          58.939837319042,
-          -36.497929962824
+          51.868331363348,
+          -12.930760098733,
+          56.677284661941
         ]
       },
       'green': {
@@ -353,13 +458,13 @@ angular.module('flickerCaseStudyApp')
         ],
         'rgb': [
           0,
-          0,
-          128
+          128,
+          0
         ],
         'lab': [
-          12.975311577717,
-          47.507765310138,
-          -64.704273245805
+          46.228817842627,
+          -51.699647328082,
+          49.897952309838
         ]
       },
       'purple': {
@@ -372,13 +477,13 @@ angular.module('flickerCaseStudyApp')
         ],
         'rgb': [
           128,
-          128,
-          0
+          0,
+          128
         ],
         'lab': [
-          51.868331363348,
-          -12.930760098733,
-          56.677284661941
+          29.782100092098,
+          58.939837319042,
+          -36.497929962824
         ]
       },
       'teal': {
@@ -410,16 +515,16 @@ angular.module('flickerCaseStudyApp')
         ],
         'rgb': [
           0,
-          128,
-          0
+          0,
+          128
         ],
         'lab': [
-          46.228817842627,
-          -51.699647328082,
-          49.897952309838
+          12.975311577717,
+          47.507765310138,
+          -64.704273245805
         ]
       }
-    };
+      };
     return {
       findByHex: function(hex) {
         var keys = Object.keys(colors);
@@ -450,7 +555,7 @@ angular.module('flickerCaseStudyApp')
         var closestVal = false;
         for (var i = 0; i < keys.length; i++) {
           var color = colors[keys[i]];
-          var val = cie1994(color.lab, lab);
+          var val = ciede2000(color.lab, lab);
           if (!closestColor || closestVal > val) {
             closestVal = val;
             closestColor = color;
