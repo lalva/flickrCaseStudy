@@ -38,6 +38,11 @@ angular.module('flickerCaseStudyApp')
     };
 
     var finishLoading = function() {
+      for (var i = 0; i < photos.length; i++) {
+        if (!photos[i].colors) {
+          photos.splice(i, 1);
+        }
+      }
       for (var j = 0; j < callbacks.length; j++) {
         callbacks[j](photos, usedColors);
       }
@@ -98,75 +103,71 @@ angular.module('flickerCaseStudyApp')
 
     var processColors = function(j, payload) {
       var rgb = payload.dominant.match(/rgb\((\d+),(\d+),(\d+)\)/);
-      var r = rgb[1] / 255, g = rgb[2] / 255, b = rgb[3] / 255;
-
-      var max = Math.max.apply(Math, [r,g,b]);
-      var min = Math.min.apply(Math, [r,g,b]);
-
-      var chr = max-min;
-      var hue = 0;
-      var val = max;
-      var sat = 0;
-
-      if (val > 0) {
-        sat = chr/val;
-        if (sat > 0) {
-          if (r === max) {
-            hue = 60*(((g-min)-(b-min))/chr);
-            if (hue < 0) {
-              hue += 360;
-            }
-          } else if (g === max) {
-            hue = 120+60*(((b-min)-(r-min))/chr);
-          } else if (b === max) {
-            hue = 240+60*(((r-min)-(g-min))/chr);
-          }
-        }
-      }
-      payload.r = rgb[1];
-      payload.g = rgb[2];
-      payload.b = rgb[3];
-      payload.h = Math.round(hue);
-      payload.s = sat;
-      payload.l = val;
-      var reducedHue = Math.round(payload.h / 60) * 60;
-      var reducedSat = 0;
-      var reducedVal = 0;
-      if (reducedHue === 360) {
-        reducedHue = 0;
-      }
-      if (reducedHue === 0) {
-        if (val * 100 < 60) {
-          reducedVal = 0.5;
-        } else if (val * 100 < 80) {
-          reducedVal = 0.75;
-        } else {
-          reducedVal = 1;
-        }
-      } else {
-        reducedSat = 1;
-      }
-      if (reducedSat === 1) {
-        reducedVal = val*100;
-        if (reducedVal < 75) {
-          reducedVal = 0.5;
-        } else {
-          reducedVal = 1;
-        }
-      }
-      payload.reduced = {
-        h: reducedHue,
-        s: reducedSat,
-        l: reducedVal
-      };
-      var color = colorService.findByHSL(reducedHue, reducedSat, reducedVal);
-      if (!color) {
-        console.log(reducedHue, reducedSat, reducedVal);
-      } else {
-        usedColors[color.name].count += 1;
-        photos[j].color = color;
-        photos[j].colors = payload;
-      }
+      rgb.splice(0, 1);
+      // var r = rgb[1] / 255, g = rgb[2] / 255, b = rgb[3] / 255;
+      //
+      // var max = Math.max.apply(Math, [r,g,b]);
+      // var min = Math.min.apply(Math, [r,g,b]);
+      //
+      // var chr = max-min;
+      // var hue = 0;
+      // var val = max;
+      // var sat = 0;
+      //
+      // if (val > 0) {
+      //   sat = chr/val;
+      //   if (sat > 0) {
+      //     if (r === max) {
+      //       hue = 60*(((g-min)-(b-min))/chr);
+      //       if (hue < 0) {
+      //         hue += 360;
+      //       }
+      //     } else if (g === max) {
+      //       hue = 120+60*(((b-min)-(r-min))/chr);
+      //     } else if (b === max) {
+      //       hue = 240+60*(((r-min)-(g-min))/chr);
+      //     }
+      //   }
+      // }
+      // payload.r = rgb[1];
+      // payload.g = rgb[2];
+      // payload.b = rgb[3];
+      // payload.h = Math.round(hue);
+      // payload.s = sat;
+      // payload.l = val;
+      // var reducedHue = Math.round(payload.h / 60) * 60;
+      // var reducedSat = 0;
+      // var reducedVal = 0;
+      // if (payload.h > 290 || payload.h < 70 || payload.l * 100 <= 10) {
+      //   reducedHue = 0;
+      //   if (val * 100 < 30) {
+      //     reducedVal = 0;
+      //   } else if (val * 100 < 60) {
+      //     reducedVal = 0.5;
+      //   } else if (val * 100 < 80) {
+      //     reducedVal = 0.75;
+      //   } else {
+      //     reducedVal = 1;
+      //   }
+      // } else {
+      //   reducedSat = 1;
+      //   reducedVal = val*100;
+      //   if (reducedVal < 75) {
+      //     reducedVal = 0.5;
+      //   } else {
+      //     reducedVal = 1;
+      //   }
+      // }
+      // payload.reduced = {
+      //   h: reducedHue,
+      //   s: reducedSat,
+      //   l: reducedVal
+      // };
+      // var color = colorService.findByHSL(reducedHue, reducedSat, reducedVal);
+      var color = colorService.findClosestColor(rgb);
+      usedColors[color.name].count += 1;
+      photos[j].color = color;
+      photos[j].colors = payload;
     };
 
     var applyFilters = function(callback) {
