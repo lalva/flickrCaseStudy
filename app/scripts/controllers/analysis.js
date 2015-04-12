@@ -39,7 +39,6 @@ angular.module('flickerCaseStudyApp')
     }
     var tags = [];
     var getWordCloudData = function() {
-      debugger;
       var photoTags = flickrPhotos.getTags();
       var keys = Object.keys(photoTags);
       for(var k=0; k < keys.length; k++) {
@@ -79,7 +78,6 @@ angular.module('flickerCaseStudyApp')
             .text(function(d) { return d.text; });
       }
   }
-
     flickrPhotos.recentPhotos(function(photos, colors) {
       self.photos = photos;
       self.usedColors = colors;
@@ -87,6 +85,7 @@ angular.module('flickerCaseStudyApp')
       drawBPGraph();
       getWordCloudData();
       drawWordCloud();
+      drawBubbles();
     });
 
 
